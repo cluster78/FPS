@@ -48,14 +48,23 @@ enum class eScene
 enum class eObjectType
 {
 	None = 0,
-	Wall,
+	LevelGap = 1000,			//4_레벨 관련 이넘값 추가. 왜 추가됬는지 설명들었는데 이것만 봐서는 모르겠음.
+
+	Level1 = LevelGap * 1,
+	Level2 = LevelGap * 2,
+	Level3 = LevelGap * 3,
+	LevelMax = 3,
+
+	Wall = Level1 + 1,
 	Box,
 	Door,
-	Item,
+
+	Item = Level2 + 1,
 	Bomb,
 
+	Player = Level3 + 1,
 	Monster,
-	Player,
+	
 };
 
 enum class eItem	//eItem 이넘클래스 추가.
@@ -84,6 +93,7 @@ enum class CURSOR_TYPE { NOCURSOR, SOLIDCURSOR, NORMALCURSOR };
 
 void SetCursor(const COORD& a_stPos);
 void SetCursor(int a_nPosX, int a_nPosY);
-void SetCursorType(CURSOR_TYPE c);		//커서타입 추가.
+void SetCursorType(CURSOR_TYPE c);		//2_커서타입 추가.
+void SetConsoleSize(int a_nWidth, int a_nHeight, int a_nX = 200, int a_nY = 200);	//4_콘솔 사이즈 변경 함수 추가
 
 //using fpTask = void(*)();	 fpTask 제거.

@@ -7,8 +7,8 @@ public:
 	MapData() = default;
 	static MapData* Get(int a_nStage);
 	static void Init();
-	static void Release();		//2_Release함수 추가.	//맵 데이터 생성 삭제부분과 그려주는 부분 추가.
-
+	static void Release();		//2_Release함수 추가.  맵 데이터 생성 삭제부분과 그려주는 부분 추가.
+	static eObjectType DataToObjectType(char c);	//4_오브젝트 타입 읽어오는 함수 추가
 private:
 	static MapData m_arrData[eGame::MaxStage];		//2_맵데이터 static으로 추가.
 

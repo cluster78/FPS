@@ -1,4 +1,27 @@
-﻿  GameManager.cpp
+﻿  pch.cpp
+  Ani.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\ani.cpp(28): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Application.cpp
+  Bomb.cpp
+  Box.cpp
+  Define.cpp
+  Door.cpp
+  FPS.cpp
+  GameManager.cpp
+  GameOverScene.cpp
+  GameScene.cpp
+  IntroScene.cpp
+  Item.cpp
   MapData.cpp
+  Monster.cpp
+  Object.cpp
+  ObjectFactory.cpp
+  Player.cpp
+  Scene.cpp
+  SceneFactory.cpp
+  SceneManager.cpp
   코드를 생성하고 있습니다...
-  FPS.vcxproj -> E:\남대륙\8_19\FPS (4)\x64\Debug\FPS.exe
+  컴파일하고 있습니다...
+  Wall.cpp
+  코드를 생성하고 있습니다...
+  FPS.vcxproj -> E:\남대륙\FPS_21\FPS\FPS_1\x64\Debug\FPS.exe
