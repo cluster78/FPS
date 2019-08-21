@@ -99,6 +99,9 @@
     <ClInclude Include="MapData.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Ani.h">
+      <Filter>Project\Game\Object\Sub</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -163,6 +166,9 @@
     </ClCompile>
     <ClCompile Include="MapData.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Ani.cpp">
+      <Filter>Project\Game\Object\Sub</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

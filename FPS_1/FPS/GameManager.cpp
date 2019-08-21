@@ -14,8 +14,6 @@ CharacterData::CharacterData()
 	nBombCount = GameManager::BombBaseCount;
 }
 
-
-
 GameManager::GameManager() {}
 GameManager::~GameManager()
 {
@@ -32,7 +30,7 @@ void GameManager::Init()
 	MapData::Init();
 }
 
-void GameManager::Release()		
+void GameManager::Release()
 {
 	MapData::Release();
 }
@@ -97,6 +95,7 @@ void GameManager::ClearObject()		//2_ 오브젝트 날림.
 	{
 		SAFE_DELETE(obj);
 	}
+
 	m_vcObj.clear();
 }
 
@@ -112,13 +111,12 @@ void GameManager::Update(float a_fDeltaTime)
 
 void GameManager::Render()
 {
-	//for (auto obj : m_vcObj)			//2_오브젝트에 렌더가 없어져서 삭제.
-	//{
-	//	obj->Render();
-	//}
+	for (auto obj : m_vcObj)		//2_오브젝트에 렌더가 없어져서 삭제 했다가 3에서 다시 추가
+	{
+		obj->Render();
+	}
 
-	//m_pPlayer->Render();
-
+	m_pPlayer->Render();
 
 	SetCursor(0, 0);				// 2_0,0부터 차례대로 맵 랜더.
 	m_refMap->Render();
@@ -126,7 +124,7 @@ void GameManager::Render()
 
 void GameManager::RemoveObject(class Object* a_pObj)		//2_오브젝트 삭제 추가.
 {
-	auto itor = std::find_if(std::begin(m_vcObj), std::end(m_vcObj), [a_pObj](Object* p) { return p == a_pObj; });
+	auto itor = std::find_if(std::begin(m_vcObj), std::end(m_vcObj), [a_pObj](Object*p) {return p == a_pObj;});
 	assert(itor != m_vcObj.end());
 	m_vcObj.erase(itor);
 }

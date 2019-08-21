@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Object.h"
 
 class Bomb : public Object
@@ -12,9 +13,11 @@ public:
 
 	void Init() override;						//2_상속받은거 씀.
 	void Update(float a_fDelta) override;
-	void Explosived(class Bomb* a_refBomb) override;	//폭발 관련함수인듯.
+	void Render() override;
+	void Explosived(class Bomb* a_refBomb) override;
 
-	float m_fLifeTime = 2.0f;
-	int m_nExplosiveRange = 2;
+	float		m_fLifeTime = 2.0f;
+	int			m_nExplosiveRange = 2;
+	RenderTile	m_Data;
 };
 

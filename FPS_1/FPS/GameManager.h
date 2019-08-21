@@ -48,13 +48,14 @@ public:
 
 #pragma endregion
 
+public:		//3_퍼블릭 추가.
 	enum
 	{
 		MaxLife = 3,		// 플레이어 라이프 수
 		RoundTime = 90,		// 90초
 
 		MoveSpeed = 10,		// 이동 속도
-		BombTime = 3,		// 3초
+		BombTime = 2,		// 2초	3_ 2초로 시간 조정
 		BombBasePower = 2,	// 2칸
 		BombBaseCount = 1,	// 최초 폭탄 설치 갯수
 	};
@@ -96,6 +97,8 @@ private:		//2_프라이빗으로 변경
 	//2_현재 플레이어 데이터 추가.
 	CharacterData m_stPlayerData;
 };
+
+
 
 #define InitGameMng()		{GameManager::CreateInstance(); }
 #define GameMng()			(GameManager::GetInstance())

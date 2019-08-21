@@ -53,6 +53,9 @@ eUpdateState Application::Update(float a_fDelta)
 		return eUpdateState::Final;
 	}
 
+	/*getchar();
+	getchar();*/
+
 	SceneMng()->Update(a_fDelta);
 
 	return eUpdateState::Run;

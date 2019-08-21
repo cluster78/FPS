@@ -24,7 +24,7 @@ void MapData::Init()
 		"1000000001"
 		"1050000001"
 		"1111111111";
-	m_arrData[0].MakeMap();				//2_1스테이지 만들어줌. 추가
+	m_arrData[0].MakeMapBuffer();				//2_1스테이지 만들어줌. 추가
 
 	// 2스테이지
 	m_arrData[1].x = 10;
@@ -40,7 +40,7 @@ void MapData::Init()
 		"1000000001"
 		"1050000001"
 		"1111111111";
-	m_arrData[1].MakeMap();				//2_2스테이지 만들어줌.추가
+	m_arrData[1].MakeMapBuffer();				//2_2스테이지 만들어줌.추가
 
 	// 3스테이지
 	m_arrData[2].x = 10;
@@ -57,7 +57,7 @@ void MapData::Init()
 		"1050000001"
 		"1111111111";
 
-	m_arrData[2].MakeMap();				//2_3스테이지 만들어줌.추가
+	m_arrData[2].MakeMapBuffer();				//2_3스테이지 만들어줌.추가
 }
 
 void MapData::Release()
@@ -68,26 +68,25 @@ void MapData::Release()
 	}
 }
 
-void MapData::MakeMap()
+void MapData::MakeMapBuffer()
 {
-	pMap = new char*[y];
+	int nX = x * TileSize;
+	int nY = y * TileSize;
 
-	for (int i = 0; i < y; ++i)
+	pMap = new char*[nY];
+
+	for( int i=0; i<nY; ++i )
 	{
-		pMap[i] = new char[x + 1];
-
-		int gap = i * x;
-
-		memcpy_s(pMap[i], sizeof(char) * (x + 1),
-			mapOriginData + gap, sizeof(char)*x);
-
-		pMap[i][x] = 0;
+		pMap[i] = new char[nX + 1];
+		pMap[i][nX] = 0;
 	}
 }
 
 void MapData::ReleaseData()
 {
-	for (int i = 0; i < y; ++i)
+	int nY = y * TileSize;
+
+	for (int i = 0; i < nY; ++i)
 	{
 		SAFE_DELETE_ARR(pMap[i])
 	}
@@ -97,7 +96,9 @@ void MapData::ReleaseData()
 
 void MapData::Render()
 {
-	for (int i = 0; i < y; ++i)
+	int nY = y * TileSize;				
+
+	for (int i = 0; i < nY; ++i)
 	{
 		cout << pMap[i] << endl;
 	}

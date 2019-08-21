@@ -32,3 +32,4 @@ void SetCursorType(CURSOR_TYPE c)
 	}
 	SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &CurInfo);
 }
+

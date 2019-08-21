@@ -13,12 +13,13 @@ private:
 	static MapData m_arrData[eGame::MaxStage];		//2_맵데이터 static으로 추가.
 
 private:
-	void MakeMap();			//2_MakeMap() 추가	맵 제작.		
+	void MakeMapBuffer();			//2_MakeMap() 추가	맵 제작.	3_MakeMapBuffer()로 이름 변경.
 	void ReleaseData();			//2_ReleaseData() 추가.	현재 맵 데이터 삭제.
 
 public:
 	void Render();				//2_Render() 추가.
 
+public:							//3_퍼블릭 추가
 	int x;
 	int y;
 	const char* mapOriginData;		//2_오리진 데이터 추가.	 원본데이터가 게임 플레이로 인해 수정되는걸 방지.

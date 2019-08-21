@@ -26,5 +26,3 @@ Scene* SceneFactory::Make(class SceneManager* a_pParent, eScene a_eScene)
 
 	return pMakedScene;
 }
-
-

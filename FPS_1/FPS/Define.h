@@ -69,14 +69,16 @@ enum class eItem	//eItem 이넘클래스 추가.
 	Max,
 };
 
-
 enum eGame
 {
 	MaxStage = 3,
+	TileSize = 5,
 };
 
 #define SAFE_DELETE(x)		{ if((x) != nullptr ) { delete (x); (x) = nullptr; } }
 #define SAFE_DELETE_ARR(x)	{ if((x) != nullptr ) { delete[] (x); (x) = nullptr; } }
+
+using RenderTile = char[TileSize][TileSize];
 
 enum class CURSOR_TYPE { NOCURSOR, SOLIDCURSOR, NORMALCURSOR };
 
