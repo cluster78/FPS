@@ -82,7 +82,7 @@ eObjectType MapData::DataToObjectType(char c)		//4_ ∏ µ•¿Ã≈Õ∞° πÆ¿⁄∑Œ πŸ≤Ó∏Èº≠ ø
 	case 'D': { return eObjectType::Door; } break;
 
 	case 'I': { return eObjectType::Item; } break;
-	case 'O': { return eObjectType::Bomb; } break;
+	//case 'O': { return eObjectType::Bomb; } break;		//5_∆¯≈∫ ¡÷ºÆ√≥∏Æ.
 	case 'M': { return eObjectType::Monster; } break;
 	case 'P': { return eObjectType::Player; } break;
 	}

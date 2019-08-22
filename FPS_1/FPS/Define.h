@@ -97,3 +97,82 @@ void SetCursorType(CURSOR_TYPE c);		//2_커서타입 추가.
 void SetConsoleSize(int a_nWidth, int a_nHeight, int a_nX = 200, int a_nY = 200);	//4_콘솔 사이즈 변경 함수 추가
 
 //using fpTask = void(*)();	 fpTask 제거.
+
+struct RenderLine					//5_렌더라인 추가.
+{
+	RenderLine() = default;
+
+	RenderLine(std::initializer_list<char> a)		
+	{
+		assert(a.size() <= TileSize);
+
+		int nIndex = 0;
+		for (auto& _c : a)
+		{
+			c[nIndex++] = _c;
+		}
+
+		c[TileSize] = 0;
+	}
+
+	RenderLine(const char* s)
+	{
+		int nLen = strlen(s);
+		assert(nLen <= TileSize);
+
+		strcpy_s(c, sizeof(char)*(TileSize + 1), s);
+	}
+
+	operator const char*() const
+	{
+		return c;
+	}
+
+	char c[TileSize + 1];
+};
+
+struct RenderTile								//5_렌더 타일 추가.
+{
+	RenderTile() = default;
+	RenderTile(std::initializer_list<RenderLine> a)
+	{
+		assert(a.size() <= TileSize);
+
+		int nIndex = 0;
+		for (auto& _c : a)
+		{
+			l[nIndex++] = _c;
+		}
+	}
+
+	RenderLine& operator[](int a_nIndex)
+	{
+		assert(a_nIndex >= 0 && a_nIndex <= TileSize);
+		return l[a_nIndex];
+	}
+
+	RenderLine l[TileSize];
+
+};
+
+// 5_오브젝트 충돌처리용, 좌상단 0, 0기준
+struct Rect
+{
+	float x;
+	float y;
+	float w;
+	float h;
+
+	bool IsCross(const Rect& rt)		//5_해당 좌표와 겹쳐있으면 false 아니면 true
+	{
+		if ((x >= rt.x + rt.w) ||
+			(x + w <= rt.x) ||
+			(y >= rt.y + h) ||
+			(y + h <= rt.y))
+		{
+			return false;
+		}
+
+		return true;
+	}
+};

@@ -16,6 +16,7 @@ Application::Application()
 {
 	SetConsoleSize(1400, 1200);				
 	SetCursorType(CURSOR_TYPE::NOCURSOR);	//2_커서 없앰.
+	srand(time(0));							//5_srand 추가
 
 	InitSceneMng();
 	InitGameMng();
