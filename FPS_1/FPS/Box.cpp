@@ -19,13 +19,13 @@ eObjectType Box::GetObjectType() const
 	return eObjectType::Box;
 }
 
-void Box::Render()
-{
-
-}
+//void Box::Render()
+//{
+//
+//}
 
 void Box::Explosived(Bomb* a_refBomb)
 {
-	GameMng()->RemoveObject(this);		//2_오브젝트 삭제
+	//GameMng()->RemoveObject(this);		//2_오브젝트 삭제
 	GameMng()->DropItem(this);				//2_아이템 떨굼.
 }

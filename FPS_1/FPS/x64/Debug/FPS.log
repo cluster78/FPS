@@ -1,4 +1,54 @@
 ﻿  pch.cpp
-e:\남대륙\fps_21\fps\fps_1\fps\define.h(120): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-e:\남대륙\fps_21\fps\fps_1\fps\define.h(134): error C2371: 'RenderTile': 재정의. 기본 형식이 다릅니다.
-  e:\남대륙\fps_21\fps\fps_1\fps\define.h(90): note: 'RenderTile' 선언을 참조하십시오.
+e:\남대륙\fps_21\fps\fps_1\fps\define.h(122): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Ani.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\ani.h(29): error C2059: 구문 오류: '}'
+e:\남대륙\fps_21\fps\fps_1\fps\ani.cpp(37): warning C4267: '=': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Application.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\application.cpp(19): warning C4244: '인수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  Bomb.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\bomb.h(15): error C2555: 'Bomb::_Update': 'Object::_Update'과(와) 재정의 가상 함수의 반환 형식이 다르거나 공변(covariant)이 아닙니다.
+  e:\남대륙\fps_21\fps\fps_1\fps\object.h(36): note: 'Object::_Update' 선언을 참조하십시오.
+e:\남대륙\fps_21\fps\fps_1\fps\bomb.cpp(41): error C2509: 'Render': 멤버 함수를 'Bomb'에서 선언하지 않았습니다.
+  e:\남대륙\fps_21\fps\fps_1\fps\bomb.h(5): note: 'Bomb' 선언을 참조하십시오.
+  Box.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\box.h(14): error C3668: 'Box::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+  Define.cpp
+  Door.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\door.h(20): error C3668: 'Door::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\door.h(21): error C3668: 'Door::Interaction': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+  FPS.cpp
+  GameManager.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\gamemanager.cpp(140): warning C4267: '초기화 중': 'size_t'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\bomb.h(15): error C2555: 'Bomb::_Update': 'Object::_Update'과(와) 재정의 가상 함수의 반환 형식이 다르거나 공변(covariant)이 아닙니다.
+  e:\남대륙\fps_21\fps\fps_1\fps\object.h(36): note: 'Object::_Update' 선언을 참조하십시오.
+  GameOverScene.cpp
+  GameScene.cpp
+  IntroScene.cpp
+  Item.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\item.h(12): error C3668: 'Item::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\item.h(13): error C3668: 'Item::Interaction': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+  MapData.cpp
+  Monster.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\monster.h(13): error C3668: 'Monster::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+  Object.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\object.cpp(54): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\object.cpp(55): warning C4244: '초기화 중': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  ObjectFactory.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\wall.h(13): error C3668: 'Wall::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\box.h(14): error C3668: 'Box::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\door.h(20): error C3668: 'Door::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\door.h(21): error C3668: 'Door::Interaction': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\item.h(12): error C3668: 'Item::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\item.h(13): error C3668: 'Item::Interaction': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+e:\남대륙\fps_21\fps\fps_1\fps\bomb.h(15): error C2555: 'Bomb::_Update': 'Object::_Update'과(와) 재정의 가상 함수의 반환 형식이 다르거나 공변(covariant)이 아닙니다.
+  e:\남대륙\fps_21\fps\fps_1\fps\object.h(36): note: 'Object::_Update' 선언을 참조하십시오.
+e:\남대륙\fps_21\fps\fps_1\fps\monster.h(13): error C3668: 'Monster::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+  Player.cpp
+  Scene.cpp
+  SceneFactory.cpp
+  SceneManager.cpp
+  코드를 생성하고 있습니다...
+  컴파일하고 있습니다...
+  Wall.cpp
+e:\남대륙\fps_21\fps\fps_1\fps\wall.h(13): error C3668: 'Wall::Render': 재정의 지정자 'override'가 있는 메서드가 기본 클래스 메서드를 재정의하지 않았습니다.
+  코드를 생성하고 있습니다...

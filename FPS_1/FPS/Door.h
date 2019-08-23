@@ -17,8 +17,8 @@ public:
 	virtual eObjectType GetObjectType() const override;
 
 	virtual void Init() override;		//2_init() 추가
-	virtual void Render() override;		//3_Render() 함수 추가
-	virtual void Interaction(class Hero* a_refHero) override;	//2_Interaction() 추가
+	//virtual void Render() override;		//3_Render() 함수 추가
+	virtual bool Interaction(class Player* a_refHero) override;	//2_Interaction() 추가
 
 	eDoorState m_eState = eDoorState::Close;
 

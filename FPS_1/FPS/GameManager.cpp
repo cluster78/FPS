@@ -48,6 +48,7 @@ void GameManager::StageStart()
 {
 	++m_nNowStage;
 	m_fGameTime = RoundTime;
+	m_eState = eGameState::Run;				//6_현재 게임상태 업데이트.
 
 	ClearObject();															//2_스테이지 넘어갈때 오브젝트 삭제용인듯.
 
@@ -77,51 +78,109 @@ void GameManager::StageStart()
 				continue;
 			}
 
-			auto* pObj = ObjectFactory::Make(eType, x, y);
-			if (eType == eObjectType::Player)
-			{
-				m_pPlayer = static_cast<Player*>(pObj);
-			}
-			else
-			{
-				int nLevel = (int)eType / (int)eObjectType::LevelGap;		//5_오브젝트 깊이 체크.
-				m_vcObj[nLevel - 1].push_back(pObj);						//5_저장하는변수 배열로 변경됨.
-			}
+			//auto* pObj = ObjectFactory::Make(eType, x, y);
+			//if (eType == eObjectType::Player)
+			//{
+			//	m_pPlayer = static_cast<Player*>(pObj);
+			//}
+			//else
+			//{
+			//	int nLevel = (int)eType / (int)eObjectType::LevelGap;		//5_오브젝트 깊이 체크.
+			//	m_vcObj[nLevel - 1].push_back(pObj);						//5_저장하는변수 배열로 변경됨.
+			//}
 
-			pObj->SetMap(m_pMap);											//2_오브젝트 맵에 셋팅.
+			//pObj->SetMap(m_pMap);											//2_오브젝트 맵에 셋팅.
+
+			CreateObject(eType, x, y);	//6_오브젝트 생성함수 호출
 		}
 	}
 }
 
+void GameManager::StageEnd()
+{
+	m_eState = eGameState::End;		//6_스테이지 종료상태 변경.
+}
+
+
 void GameManager::ClearObject()												//2_ 오브젝트 날림.
 {
-	for (auto vc : m_vcObj)													//5_백터의 배열이라 레인지드포 2번돌림.
+	for (auto& vc : m_arrObj)													//5_백터의 배열이라 레인지드포 2번돌림.
 	{
 		for (auto* pObj : vc)
 		{
 			SAFE_DELETE(pObj);
 		}
-
 		vc.clear();
 	}
 }
 
+void GameManager::CreateObject(eObjectType a_eObjType, int x, int y)
+{
+	auto* pObj = ObjectFactory::Make(a_eObjType, x, y);
+
+	if (a_eObjType == eObjectType::Player)
+	{
+		m_pPlayer = static_cast<Player*>(pObj);
+		m_pPlayer->SetStat(&m_stPlayerData);
+	}
+	else
+	{
+		int nDepthIndex = (int)a_eObjType / (int)eObjectType::RenderDepthGap;
+		nDepthIndex -= 1;
+
+		m_arrObj[nDepthIndex].push_back(pObj);
+	}
+
+	pObj->SetMap(m_pMap);
+}
+
+
 void GameManager::Update(float a_fDeltaTime)
 {
-	for (auto& vc : m_vcObj)
+	int nSize = m_arrObj.size();
+
+	static std::vector<class Object*> vcDelete;
+	vcDelete.clear();
+
+	for (int i = 1; i < nSize; ++i)
 	{
-		for (auto* pObj : vc)
+		auto& arrObj = m_arrObj[i];
+
+		for (auto* pObj : arrObj)
 		{
-			pObj->Update(a_fDeltaTime);
+			Object* p = nullptr;
+
+			if (pObj->Update(a_fDeltaTime) == true)
+			{
+				p = pObj;
+			}
+
+			if (pObj->Interaction(m_pPlayer) == true)
+			{
+				p = pObj;
+			}
+
+			if (p != nullptr)
+			{
+				vcDelete.push_back(p);
+			}
 		}
 	}
+
+	// 인터렉션 이후 삭제해야할 오브젝트 삭제
+	for (auto* pDeleteObj : vcDelete)
+	{
+		pDeleteObj->RenderClear();
+		RemoveObject(pDeleteObj);
+	}
+	vcDelete.clear();
 		
 	m_pPlayer->Update(a_fDeltaTime);
 }
 
 void GameManager::Render()
 {
-	for (auto& vc  : m_vcObj)												//2_오브젝트에 렌더가 없어져서 삭제 했다가 3에서 다시 추가
+	for (auto& vc  : m_arrObj)												//2_오브젝트에 렌더가 없어져서 삭제 했다가 3에서 다시 추가
 	{
 		for (auto* pObj : vc)
 		{
@@ -133,21 +192,38 @@ void GameManager::Render()
 
 	//SetCursor(0, 0);														// 2_0,0부터 차례대로 맵 랜더.	5_삭제
 	m_refMap->Render();
+
+	if (m_eState == eGameState::End)
+	{
+		StageStart();
+	}
+
+	cout << "pos : " << m_pPlayer->rt.x << " /// " << m_pPlayer->rt.y << endl;
+	COORD center = m_pPlayer->rt.Center();
+
+	cout << "center : " << center.X << " /// " << center.Y << endl;
+
+	if (m_sLog.size() > 0)
+	{
+		cout << m_sLog.c_str() << endl;
+		m_sLog.clear();
+	}
 }
 
 void GameManager::RemoveObject(class Object* a_pObj)						//2_오브젝트 삭제 추가.		5_오브젝트삭제에 깊이체크해서 삭제하는부분 추가.
 {
 	eObjectType eType = a_pObj->GetObjectType();							
 
-	int nLevelIndex = (int)eType / (int)eObjectType::LevelGap;
+	int nLevelIndex = (int)eType / (int)eObjectType::RenderDepthGap;
 	nLevelIndex -= 1;
 
-	auto& vc = m_vcObj[nLevelIndex];
-
+	auto& vc = m_arrObj[nLevelIndex];
 
 	auto itor = std::find_if(std::begin(vc), std::end(vc), [a_pObj](Object*p) {return p == a_pObj;});
 	assert(itor != vc.end());
 	vc.erase(itor);
+
+	SAFE_DELETE(a_pObj);
 }
 
 void GameManager::DropItem(Object* a_pObj)
@@ -172,6 +248,48 @@ void GameManager::ObtainItem(eItem a_eItem)			//2_아이템 획득 관련함수 추가.
 		assert(false && "arg error");
 		break;
 	}
+}
+
+void GameManager::Die(class Object* a_refObj)		//6_죽으면 죽음표시
+{
+	cout << "Player Die" << endl;
+}
+
+
+bool GameManager::AddBomb(int a_nPlayerX, int a_nPlayerY)		//6_폭탄 추가 함수.
+{
+	int nX = a_nPlayerX / TileSize;
+	int nY = a_nPlayerY / TileSize;
+	constexpr static int nIndex = ((int)eObjectType::Bomb / (int)eObjectType::RenderDepthGap) - 1;
+
+	bool bExsistBomb = false;
+
+	for (auto* pObj : m_arrObj[nIndex])
+	{
+		if (pObj->GetObjectType() == eObjectType::Bomb)
+		{
+			bExsistBomb = pObj->rt.IsIn(a_nPlayerX, a_nPlayerY);
+
+			if (bExsistBomb == true)
+			{
+				break;
+			}
+		}
+	}
+
+	if (bExsistBomb == true)
+	{
+		return false;
+	}
+
+	CreateObject(eObjectType::Bomb, nX, nY);
+	return true;
+
+}
+
+void GameManager::ResistExplosion(int a_nBombX, int a_nBombY, int a_nPower)		//6_폭발 저항?
+{
+	m_pPlayer->m_nPutBombCount -= 1;											//놔둔 폭탄 숫자 하나 감소.
 }
 
 #include "Bomb.h"

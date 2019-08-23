@@ -5,7 +5,7 @@ MapData MapData::m_arrData[eGame::MaxStage] = { {}, };		//2_초기화. 추가.
 
 MapData* MapData::Get(int a_nStage)
 {
-	return &m_arrData[a_nStage];
+	return &m_arrData[a_nStage - 1];
 }
 
 void MapData::Init()					//4_맵 데이터 형태 변경(숫자에서 문자로)

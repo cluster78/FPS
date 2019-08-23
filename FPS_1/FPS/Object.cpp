@@ -11,21 +11,25 @@ RenderTile Object::Empty = RenderTile{		//5_Empty를 삭제용 변수로 초기화
 
 Object::Object(int _x, int _y) : x(_x), y(_y)
 { 
-	rt.x = _x * TileSize;			//5_ 생성자에서 rt변수들 셋팅.
-	rt.y = _y * TileSize;
+	rt.x = (float)(_x * TileSize);			//5_ 생성자에서 rt변수들 셋팅.
+	rt.y = (float)(_y * TileSize);
 	rt.w = TileSize;
 	rt.h = TileSize;
 
 }
-Object::~Object() { /*m_refMap = nullptr;*/ }	//2_소멸자에서 맵데이터 삭제 추가. 3_해당 구문 위치 변경.
+Object::~Object() { 
+	
+	m_pNowAni = nullptr;
+	m_refMap = nullptr;		//2_소멸자에서 맵데이터 삭제 추가. 3_해당 구문 위치 변경.	6_다시 복귀
+}	
 
 //void Object::Render() { }
 void Object::Init() {}
 
 void Object::Explosived(class Bomb* a_refBomb) { }
-void Object::Interaction(class Hero* a_refHero) { }
+bool Object::Interaction(class Player* a_refHero) { return false; }
 void Object::_PreUpdate(float a_fDelta) {}
-void Object::_Update(float a_fDelta) {}
+bool Object::_Update(float a_fDelta) { return false; }
 
 void Object::SetMap(char** a_refMap)			//5_ cpp에 정의추가.
 {
@@ -33,10 +37,10 @@ void Object::SetMap(char** a_refMap)			//5_ cpp에 정의추가.
 	m_refMap = a_refMap;
 }
 
-void Object::Update(float a_fDelta)				//5_ _PreUpdate와 _Update에 fps 전달
+bool Object::Update(float a_fDelta)				//5_ _PreUpdate와 _Update에 fps 전달
 {
 	_PreUpdate(a_fDelta);
-	_Update(a_fDelta);
+	return _Update(a_fDelta);
 }
 
 Rect Object::GetRendertRect() const
@@ -44,7 +48,7 @@ Rect Object::GetRendertRect() const
 	return rt;
 }
 
-void Object::Clear()							//5_렌더 삭제 함수 추가.
+void Object::RenderClear()							//5_렌더 삭제 함수 추가.
 {
 	Rect rt = GetRendertRect();
 	int nX = rt.x;
@@ -61,8 +65,9 @@ void Object::Clear()							//5_렌더 삭제 함수 추가.
 
 void Object::Render()					//3_맵 랜더 함수 추가.
 {
-	int nX = x * TileSize;
-	int nY = y * TileSize;
+	Rect rt = GetRendertRect();
+	int nX = (int)rt.x;
+	int nY = (int)rt.y;
 
 	for (int i = 0; i < TileSize; ++i)
 	{

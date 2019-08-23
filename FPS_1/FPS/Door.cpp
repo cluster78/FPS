@@ -2,6 +2,7 @@
 #include "Door.h"
 
 #include "GameManager.h"
+#include "Player.h"
 
 Door::Door(int x, int y) : Object(x, y)
 , m_Close{
@@ -35,14 +36,20 @@ void Door::Init()							//2_문 기본값 셋팅
 	m_eState = eDoorState::Close;
 }
 
-void Door::Render()
+//void Door::Render()
+//{
+//
+//}
+
+bool Door::Interaction(class Player* a_refHero)
 {
+	if (m_eState == eDoorState::Close) { return false; }	//2_문 닫혀있으면 걍리턴
 
-}
+	if (IsCross(a_refHero) == true)
+	{
+		GameMng()->StageStart();	//2_아니면 다음스테이지
+	}
 
-void Door::Interaction(class Hero* a_refHero)
-{
-	if (m_eState == eDoorState::Close) { return; }	//2_문 닫혀있으면 걍리턴
-
-	GameMng()->StageStart();	//2_아니면 다음스테이지
+	return false;
+	
 }

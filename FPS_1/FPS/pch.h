@@ -7,6 +7,7 @@
 #include <Windows.h>
 #include <ctime>
 
+#include <array>
 #include <string>
 #include <vector>
 #include <queue>		//2_큐 인클루드 추가.

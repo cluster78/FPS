@@ -48,23 +48,22 @@ enum class eScene
 enum class eObjectType
 {
 	None = 0,
-	LevelGap = 1000,			//4_레벨 관련 이넘값 추가. 왜 추가됬는지 설명들었는데 이것만 봐서는 모르겠음.
+	RenderDepthGap = 1000,			//4_레벨 관련 이넘값 추가. 왜 추가됬는지 설명들었는데 이것만 봐서는 모르겠음.   //6_레벨에서 뎁스로 변경. 랜더할때 부피가있으면 다른것과 겹칠수있으므로 깊이를 주는거라고 설명 듣고 이해함.
 
-	Level1 = LevelGap * 1,
-	Level2 = LevelGap * 2,
-	Level3 = LevelGap * 3,
-	LevelMax = 3,
+	RenderDepth1 = RenderDepthGap * 1,
+	RenderDepth2 = RenderDepthGap * 2,
+	RenderDepth3 = RenderDepthGap * 3,
+	RenderDepthCount = 3,
 
-	Wall = Level1 + 1,
-	Box,
+	Wall = RenderDepth1 + 1,
+	
+	Box = RenderDepth2 + 1,
 	Door,
-
-	Item = Level2 + 1,
+	Item,
 	Bomb,
 
-	Player = Level3 + 1,
+	Player = RenderDepth3 + 1,
 	Monster,
-	
 };
 
 enum class eItem	//eItem 이넘클래스 추가.
@@ -87,7 +86,10 @@ enum eGame
 #define SAFE_DELETE(x)		{ if((x) != nullptr ) { delete (x); (x) = nullptr; } }
 #define SAFE_DELETE_ARR(x)	{ if((x) != nullptr ) { delete[] (x); (x) = nullptr; } }
 
-using RenderTile = char[TileSize][TileSize];
+//using RenderTile = char[TileSize][TileSize]; //6_렌더타일 제거.
+#include "SceneManager.h"						//6_위키 아래키 입력값을 전체적으로 체크하게끔 Define으로 뺌.
+inline bool IsKeyDown(eKey a_eKey)	{ return SceneManager::GetKeyState(a_eKey) == eInputState::Down; }
+inline bool IsKeyUp(eKey a_eKey)	{ return SceneManager::GetKeyState(a_eKey) == eInputState::Up; }
 
 enum class CURSOR_TYPE { NOCURSOR, SOLIDCURSOR, NORMALCURSOR };
 
@@ -175,4 +177,20 @@ struct Rect
 
 		return true;
 	}
+
+	bool IsIn(int _x, int _y)			//6_범위 안에 들어와있는거 검사.
+	{
+		if ((x <= _x) && (_x <= x + w) &&
+			(y <= _y) && (_y <= y + h))
+		{
+			return true;
+		}
+		return false;
+	}
+
+	COORD Center()						//6_센터좌표 체크.
+	{
+		return COORD{ (short)(x + w / 2), (short)(y + h / 2) };
+	}
+
 };

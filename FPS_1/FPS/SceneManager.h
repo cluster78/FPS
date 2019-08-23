@@ -39,7 +39,7 @@ public:
 	void Update(float a_fDeltaTime);
 	void Render();
 
-	eInputState GetKeyState(eKey a_eKey);
+	static eInputState GetKeyState(eKey a_eKey);
 
 private:
 
@@ -50,7 +50,7 @@ private:
 
 	int				m_arrKeys[(int)eKey::Max];
 	int				m_BeforeKeyState[(int)eKey::Max];
-	eInputState		m_KeyState[(int)eKey::Max];
+	static eInputState		m_KeyState[(int)eKey::Max];		//6_static으로 변경해서 Define에 인라인으로 선언.
 };
 
 #define InitSceneMng()		{SceneManager::CreateInstance(); SceneManager::GetInstance()->Init();}

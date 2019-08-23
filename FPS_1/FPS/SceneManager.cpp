@@ -5,6 +5,8 @@
 
 #include "SceneFactory.h"
 
+eInputState SceneManager::m_KeyState[(int)eKey::Max] = {};
+
 SceneManager::SceneManager()
 {
 	int nIndex = 0;

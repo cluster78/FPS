@@ -12,12 +12,14 @@ public:
 	virtual eObjectType GetObjectType() const override;
 
 	void Init() override;						//2_상속받은거 씀.
-	void _Update(float a_fDelta) override;		//5_ 언더바 추가
+	bool _Update(float a_fDelta) override;		//5_ 언더바 추가
 	//void Render() override;
 	void Explosived(class Bomb* a_refBomb) override;
 
 	float		m_fLifeTime = 2.0f;
 	int			m_nExplosiveRange = 2;
-	RenderTile	m_Data;
+	//RenderTile	m_Data;
+	class Ani* m_pAni = nullptr;
+
 };
 

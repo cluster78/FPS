@@ -2,52 +2,124 @@
 #include "Item.h"
 
 #include "GameManager.h"
+#include "Ani.h"
 
-Item::Item(int x, int y) : Object(x, y),
+#include "Player.h"
 
-m_Item{
-	{
-			{ 'X', '-', '-', '-', 'X' },
-			{ '|', 'X', ' ', 'X', '|' },
-			{ '|', ' ', 'X', ' ', '|' },
-			{ '|', 'X', ' ', 'X', '|' },
-			{ 'X', '-', '-', '-', 'X' },
-	},
-
-	{
-			{ 'X', '-', '-', '-', 'X' },
-			{ '|', 'X', ' ', 'X', '|' },
-			{ '|', ' ', 'X', ' ', '|' },
-			{ '|', 'X', ' ', 'X', '|' },
-			{ 'X', '-', '-', '-', 'X' },
-	},
-
-	{
-			{ 'X', '-', '-', '-', 'X' },
-			{ '|', 'X', ' ', 'X', '|' },
-			{ '|', ' ', 'X', ' ', '|' },
-			{ '|', 'X', ' ', 'X', '|' },
-			{ 'X', '-', '-', '-', 'X' },
-	},
-}
+Item::Item(int x, int y) : Object(x, y), m_pAni(new Ani())
 {
-	m_pNowAni = &m_Item[0];
+	int nNum = (rand() % (int)eItem::Max);
+	m_eType = (eItem)nNum;
+
+	m_pAni->Resize((int)eItem::Max);
+	m_pAni->Add((int)eItem::PowerUp,
+		{
+			{{"     "},
+			{"|   |"},
+			{"| P |"},
+			{"|   |"},
+			{"     "}},
+
+		   {{"     "},
+			{"| P |"},
+			{"|   |"},
+			{"|   |"},
+			{"     "}},
+
+		   {{"     "},
+			{"|   |"},
+			{"|   |"},
+			{"| P |"},
+			{"     "}},
+		}
+	);
+
+	m_pAni->Add((int)eItem::SpeedUp,
+		{
+		   {{"     "},
+			{"|   |"},
+			{"| S |"},
+			{"|   |"},
+			{"     "}},
+
+		   {{"     "},
+			{"| S |"},
+			{"|   |"},
+			{"|   |"},
+			{"     "}},
+
+		   {{"     "},
+			{"|   |"},
+			{"|   |"},
+			{"| S |"},
+			{"     "}},
+		}
+	);
+
+	m_pAni->Add((int)eItem::BombCount,
+		{
+		   {{"     "},
+			{"|   |"},
+			{"|B-C|"},
+			{"|   |"},
+			{"     "}},
+
+		   {{"     "},
+			{"|B-C|"},
+			{"|   |"},
+			{"|   |"},
+			{"     "}},
+
+		   {{"     "},
+			{"|   |"},
+			{"|   |"},
+			{"|B-C|"},
+			{"     "}},
+		}
+	);
+
+	m_pAni->SetState((int)m_eType);
+	m_pNowAni = m_pAni->Get();
 }
 
-Item::~Item() { }
+Item::~Item() 
+{
+	SAFE_DELETE(m_pAni);
+}
 
 eObjectType Item::GetObjectType() const
 {
 	return eObjectType::Item;
 }
 
-void Item::Interaction(class Hero* a_refHero)		//2_플레이어와 상호작용
+bool Item::Interaction(class Player* a_refHero)		//2_플레이어와 상호작용
 {
-	GameMng()->RemoveObject(this);		//2_템 삭제.
-	GameMng()->ObtainItem(m_eType);		//2_플레이어 아이템 획득 함수불러옴.
+	if (IsCross(a_refHero) == true)
+	{
+		GameMng()->ObtainItem(m_eType);		//2_플레이어 아이템 획득 함수불러옴.
+		return true;
+	}
+
+	return false;
+
+	//GameMng()->RemoveObject(this);		//2_템 삭제.
+	
 }
 
-void Item::Render()						//3_Render()함수 추가
+void Item::_PreUpdate(float a_fDelta)
 {
-
+	RenderClear();
 }
+
+bool Item:: _Update(float a_fDelta)
+{
+	m_pAni->Update(a_fDelta);
+	m_pNowAni = m_pAni->Get();
+
+	return false;
+}
+
+//void Item::Render()						//3_Render()함수 추가
+//{
+//
+//}

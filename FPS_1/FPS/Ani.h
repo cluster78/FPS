@@ -3,7 +3,7 @@
 class Ani					//3_애니 클래스 추가.
 {
 public:
-	Ani();
+	Ani() = default;
 	virtual ~Ani();
 
 	void Resize(int a_nAniTypeCount);				//3_랜더 사이즈 조정함수
@@ -25,6 +25,6 @@ public:
 	int m_nCut = 0;				//5_Frame -> Cut 으로 용어 변경.
 	float m_fNowTile = 0;		//5_현재 타일 변수 추가.
 
-	inline static const float a_fCutTime = 0.3f	//5_한컷당 유지시간 변수 추가.
+	inline static const float a_fCutTime = 0.2f;	//5_한컷당 유지시간 변수 추가.
 };
 
