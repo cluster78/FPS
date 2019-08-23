@@ -40,7 +40,12 @@ void Player::SetStat(struct CharacterData* a_pStat)		//6_플레이어 스텟갑 셋팅
 {
 	m_refStat = a_pStat;
 	m_nPutBombCount = 0;
-};
+}
+
+void Player::_PreUpdate(float a_fDelta)
+{
+	RenderClear();
+}
 
 bool Player::_Update(float a_fDelta)
 {
@@ -65,6 +70,21 @@ void Player::Move(float a_fDeltaTime)		//6_플레이어 이동함수.
 
 	rt.x += fX;
 	rt.y += fY;
+
+	if (GameMng()->MoveCheck(m_refBomb) == false)
+	{
+		rt.x -= fX;
+		rt.y -= fY;
+	}
+
+	if (m_refBomb != nullptr)
+	{
+		if (m_refBomb->IsCross(this) == false)
+		{
+			m_refBomb = nullptr;
+		}
+
+	}
 }
 
 void Player::BombCheck()							//6_폭탄체크 함수
@@ -75,11 +95,35 @@ void Player::BombCheck()							//6_폭탄체크 함수
 	{
 		COORD c = rt.Center();		// 플레이어 이미지의 센터찾아서 좌표 받아옴
 
-		if (GameMng()->AddBomb(c.X, c.Y) == true)		//폭탄추가.
+		auto* pBomb = GameMng()->AddBomb(c.X, c.Y);
+
+		if (pBomb != nullptr)		//폭탄추가.
 		{
 			++m_nPutBombCount;							//놔진 폭탄변수 증가
+			m_refBomb = pBomb;
 		}
 	}
+}
+
+void Player::ResetBomb(Object* a_refBomb)
+{
+	if (m_refBomb == a_refBomb)
+	{
+		m_refBomb = nullptr;
+	}
+
+	--m_nPutBombCount;
+
+	if (m_nPutBombCount < 0)
+	{
+		m_nPutBombCount = 0;
+	}
+}
+
+bool Player::Exposived()
+{
+	GameMng()->Die(this);
+	return false;
 }
 
 

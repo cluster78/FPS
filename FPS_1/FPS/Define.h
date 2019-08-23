@@ -27,6 +27,14 @@ enum class eKey
 	Max,
 };
 
+enum class eDir
+{
+	Left,
+	Top,
+	Right,
+	Bottom,
+};
+
 enum class eInputState : short
 {
 	None	= 0b00,
@@ -60,10 +68,12 @@ enum class eObjectType
 	Box = RenderDepth2 + 1,
 	Door,
 	Item,
-	Bomb,
+	
 
 	Player = RenderDepth3 + 1,
 	Monster,
+	Explosion,
+	Bomb,
 };
 
 enum class eItem	//eItem 이넘클래스 추가.
@@ -119,7 +129,7 @@ struct RenderLine					//5_렌더라인 추가.
 
 	RenderLine(const char* s)
 	{
-		int nLen = strlen(s);
+		size_t nLen = strlen(s);
 		assert(nLen <= TileSize);
 
 		strcpy_s(c, sizeof(char)*(TileSize + 1), s);
@@ -169,7 +179,7 @@ struct Rect
 	{
 		if ((x >= rt.x + rt.w) ||
 			(x + w <= rt.x) ||
-			(y >= rt.y + h) ||
+			(y >= rt.y + rt.h) ||
 			(y + h <= rt.y))
 		{
 			return false;

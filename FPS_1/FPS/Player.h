@@ -12,13 +12,16 @@ public:
 
 	virtual Rect GetRendertRect() const override;
 	void SetStat(struct CharacterData* a_pStat);
+	void ResetBomb(Object* a_refBomb);
+	virtual bool Exposived() override;
 
 private:
 	void Move(float a_fDeltaTime);				//6_이동함수 추가
 	void BombCheck();							//6_폭탄체크함수 추가
 
 protected:
-	virtual bool _Update(float a_fDelta);		//6_업데이트 함수 추가.
+	virtual void _PreUpdate(float a_fDelta) override;
+	virtual bool _Update(float a_fDelta) override;		//6_업데이트 함수 추가.
 	//virtual void Render() override;		//3_랜더 추가    6_랜더 다시 삭제
 
 	RenderTile	m_Data;					//3_랜더 데이터 변수 추가
@@ -26,5 +29,6 @@ protected:
 
 public:
 	int m_nPutBombCount = 0;
+	Object* m_refBomb = nullptr;
 };
 

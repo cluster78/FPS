@@ -6,6 +6,7 @@ public:
 	Object(int _x, int _y);
 	virtual ~Object();
 	virtual eObjectType GetObjectType() const = 0;
+	virtual bool CanMove() const;
 
 	bool Update(float a_fDelta);
 	void Render();									//3_랜더 추가
@@ -13,10 +14,10 @@ public:
 	void RenderClear();
 
 	virtual void Init();									//2_폭탄이랑 히어로 관련부분 추가.
-	virtual void Explosived(class Bomb* a_refBomb);
+	virtual bool Explosived();
 	virtual bool Interaction(class Player* a_refHero);		//6_bool로 변경하여 리턴값생성.
 
-	inline void SetPos(int _x, int _y) { x = _x; y = _y; }	//2_이동 함수추가.
+	inline void SetPos(int _x, int _y) { x = _x; y = _y; rt.x = _x; rt.y = _y; }	//2_이동 함수추가.
 	inline bool IsCross(const Object& a_refObj)				//6_겹침 검사함수
 	{
 		return rt.IsCross(a_refObj.rt);

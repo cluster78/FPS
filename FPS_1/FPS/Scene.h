@@ -14,6 +14,7 @@ public:
 	virtual void Init();
 	virtual void Update(float a_fDeltaTime);
 	virtual void Render();
+	virtual void PostRender();
 
 protected:
 

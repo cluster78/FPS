@@ -12,6 +12,26 @@ struct CharacterData
 	CharacterData();													//2_케릭터 데이터 추가. 현재 플레이어의 스텟조정
 };
 
+struct Explosion
+{
+	int x;
+	int y;
+	int pow;
+
+	Explosion(int _x, int _y, int _pow) : x(_x), y(_y), pow(_pow)
+	{}
+};
+
+struct CreateObj
+{
+	int x;
+	int y;
+	eObjectType type;
+
+	CreateObj(int _x, int _y, eObjectType _type) : x(_x), y(_y), type(_type)
+	{}
+};
+
 class GameManager
 {
 #pragma region SINGLE_TON
@@ -76,19 +96,26 @@ public:																	//3_퍼블릭 추가.
 	void StageEnd();
 
 	void Update(float a_fDeltaTime);	
-	void Render();						
+	void Render();	
+	void PostRender();
 
 	void ClearObject();													//2_오브젝트 전부 날림.
-	void CreateObject(eObjectType a_eObjType, int x, int y);			//6_오브젝트 생성함수 추가.
+	class Object* CreateObject(eObjectType a_eObjType, int x, int y);			//6_오브젝트 생성함수 추가.
 
 	void RemoveObject(class Object* a_pObj);							//2_특정 오브젝트만 날림
 	void DropItem(class Object* a_pObj);		
-	void GetBombData(class Bomb* a_refBomb) const;						//2_폭탄 데이터 가져와서 셋팅
+	void GetBombData(OUT class Bomb* a_refBomb) const;						//2_폭탄 데이터 가져와서 셋팅
 	void ObtainItem(eItem a_eItem);										//2_아이템 획득했을때 획득한 아이템 검사 및 플레이어 능력치 증가
 	void Die(class Object* a_refObj);
-	bool AddBomb(int a_nPlayerX, int a_nPlayerY);
-	void ResistExplosion(int a_nBombX, int a_nBombY, int a_nPower);
+	class Object* AddBomb(int a_nPlayerX, int a_nPlayerY);
+	void ResistExplosion(Object* a_refBomb,int x, int y, int pow);
+	bool MoveCheck(class Object* a_pMoveIgnoreObject = nullptr);
+	void CheckExplosion(Object* a_refExplosion);
+	void AddScore(int a_nScore);
 
+private:
+	void CreateExplosionRecursive(eDir a_eDir, int nBombX, int nBombY, int a_nRemainPower);
+	bool FindObject_withPosition(eObjectType a_eObj, int x, int y);
 
 private:																//2_프라이빗으로 변경
 	// 오브젝트
@@ -106,13 +133,15 @@ private:																//2_프라이빗으로 변경
 	int m_nScore = 0;		// 점수
 
 																		//2_폭탄담아놓을 큐 추가.		
-	std::queue<class Bomb*> m_qBomb;
-
+	std::vector<class Object*> m_vcDelete;
+	std::vector<CreateObj> m_vcCreate;
+	std::vector<Explosion> m_vcExplosion;
 																		//2_현재 플레이어 데이터 추가.
 	CharacterData m_stPlayerData;
 
 	eGameState m_eState = eGameState::None;
 
+public:
 	std::string m_sLog = "";
 };
 

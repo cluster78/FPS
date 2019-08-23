@@ -26,7 +26,8 @@ Object::~Object() {
 //void Object::Render() { }
 void Object::Init() {}
 
-void Object::Explosived(class Bomb* a_refBomb) { }
+bool Object::CanMove() const { return false; }
+bool Object::Explosived() { return false; }
 bool Object::Interaction(class Player* a_refHero) { return false; }
 void Object::_PreUpdate(float a_fDelta) {}
 bool Object::_Update(float a_fDelta) { return false; }
@@ -51,8 +52,8 @@ Rect Object::GetRendertRect() const
 void Object::RenderClear()							//5_렌더 삭제 함수 추가.
 {
 	Rect rt = GetRendertRect();
-	int nX = rt.x;
-	int nY = rt.y;
+	int nX = (int)rt.x;
+	int nY = (int)rt.y;
 
 	for (int i = 0; i < TileSize; ++i)
 	{

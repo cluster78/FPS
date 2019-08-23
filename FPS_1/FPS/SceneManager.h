@@ -38,6 +38,7 @@ public:
 
 	void Update(float a_fDeltaTime);
 	void Render();
+	void PostRender();
 
 	static eInputState GetKeyState(eKey a_eKey);
 

@@ -26,3 +26,8 @@ void GameScene::Render()
 	GameMng()->Render();
 }
 
+void GameScene::PostRender()
+{
+	GameMng()->PostRender();
+}
+
